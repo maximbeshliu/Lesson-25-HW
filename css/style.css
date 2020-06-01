@@ -1,0 +1,46 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box; }
+
+html, body {
+  height: 100%; }
+
+.container {
+  font-family: 'Lora', serif;
+  display: flex;
+  flex-flow: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0; }
+  .container .image {
+    margin: 20px 0; }
+    .container .image #picture {
+      width: 50vw;
+      height: 50vh; }
+  .container .explanation {
+    width: 70vw;
+    height: auto;
+    margin: 20px 0; }
+
+#loader {
+  position: relative; }
+
+.spinner:before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  margin-top: -30px;
+  margin-left: -30px;
+  border-radius: 50%;
+  border-top: 5px solid blueviolet;
+  border-right: 5px solid transparent;
+  animation: spinner 0.7s linear infinite; }
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg); } }
