@@ -23,9 +23,6 @@ html, body {
     height: auto;
     margin: 20px 0; }
 
-#loader {
-  position: relative; }
-
 .spinner:before {
   content: "";
   box-sizing: border-box;
