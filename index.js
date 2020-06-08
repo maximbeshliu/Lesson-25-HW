@@ -29,6 +29,7 @@ function Apod(id) {
     this.renderPage = function (data) {
         let pageContainer = document.createElement('div');
         pageContainer.classList.add('main_container');
+        pageContainer.setAttribute('id', this.id);
         this.container.append(pageContainer);
 
         let title = document.createElement('h1');

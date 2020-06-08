@@ -4,6 +4,9 @@
 
     html, body{
         height: 100%;
+        display: flex;
+        flex-flow: column;
+        flex-direction: column-reverse;
     }
     .date{
       display: none;
@@ -32,6 +35,7 @@
         }
     
     .main_container{
+        height: 100vh;
         font-family: 'Lora', serif;
         display: flex;
         flex-flow: column;
