@@ -8,7 +8,7 @@ function Apod(id) {
     this.container.setAttribute('id', this.id);
     this.addElement = function () {
         let element = document.createElement('div');
-
+        element.classList.add('date');
         if (this.date === undefined) {
             this.date = new Date();
             fetch('https://api.nasa.gov/planetary/apod?api_key=Vc2F9ggHHlrgTjgfjgKc9gGhm6Wnp4Hq27Tm0RCm')
