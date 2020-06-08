@@ -1,45 +1,100 @@
 
-document.querySelector('.container').classList.add('spinner');
+function Apod(id) {
+    this.id = id;
+    this.date = undefined;
+    let body = document.body;
+    this.container = document.createElement('div');
+    this.container.setAttribute('class', 'container');
+    this.container.setAttribute('id', this.id);
+    this.addElement = function () {
+        let element = document.createElement('div');
+        element.classList.add('date');
+        if (this.date === undefined) {
+            this.date = new Date();
+            fetch('https://api.nasa.gov/planetary/apod?api_key=Vc2F9ggHHlrgTjgfjgKc9gGhm6Wnp4Hq27Tm0RCm')
+                .then(response => response.json())
+                .then(data => this.renderPage(data));
 
-fetch('https://api.nasa.gov/planetary/apod?api_key=Vc2F9ggHHlrgTjgfjgKc9gGhm6Wnp4Hq27Tm0RCm')
-    .then(response => response.json())
-    .then(data => renderPage(data));
+        } else {
+            let date = this.yyyymmdd(this.date.setDate(this.date.getDate() - 1));
+            fetch('https://api.nasa.gov/planetary/apod?api_key=Vc2F9ggHHlrgTjgfjgKc9gGhm6Wnp4Hq27Tm0RCm&date=' + date)
+                .then(response => response.json())
+                .then(data => this.renderPage(data));
+        }
 
-function renderPage(data) {
-    let body = document.querySelector('.container');
+        element.innerText = this.date;
+        this.container.append(element);
+    };
 
-    let title = document.createElement('h1');
-    title.innerText = data.title;
-    body.append(title);
+    this.renderPage = function (data) {
+        let pageContainer = document.createElement('div');
+        pageContainer.classList.add('main_container');
+        this.container.append(pageContainer);
 
-    let image = document.createElement('div');
-    image.classList.add('image');
-    if (data.media_type === 'video') {
-        let video = document.createElement('iframe');
-        video.setAttribute('src', data.url);
-        video.setAttribute('width', '420');
-        video.setAttribute('height', '300');
-        image.append(video);
-    } else {
-        let picture = document.createElement('img');
-        picture.setAttribute('src', data.hdurl);
-        picture.setAttribute('id', 'picture');
-        image.append(picture);
-    }
-    body.append(image);
+        let title = document.createElement('h1');
+        title.innerText = data.title;
+        pageContainer.append(title);
 
-    let explataionText = document.createElement('p');
-    explataionText.classList.add('explanation');
-    explataionText.innerText = data.explanation;
-    body.append(explataionText);
+        let image = document.createElement('div');
+        image.classList.add('image');
+        if (data.media_type === 'video') {
+            let video = document.createElement('iframe');
+            video.setAttribute('src', data.url);
+            video.setAttribute('width', '420');
+            video.setAttribute('height', '300');
+            image.append(video);
+        } else {
+            let picture = document.createElement('img');
+            picture.setAttribute('src', data.hdurl);
+            picture.setAttribute('id', 'picture');
+            image.append(picture);
+        }
+        pageContainer.append(image);
 
-    if (data.copyright) {
-        let copyright = document.createElement('span');
-        copyright.innerText = data.copyright;
-        body.append(copyright);
-    }
-    body.classList.remove('spinner');
-};
+        let explataionText = document.createElement('p');
+        explataionText.classList.add('explanation');
+        explataionText.innerText = data.explanation;
+        pageContainer.append(explataionText);
+
+        if (data.copyright) {
+            let copyright = document.createElement('span');
+            copyright.innerText = data.copyright;
+            pageContainer.append(copyright);
+        }
+    };
+
+    this.yyyymmdd = function () {
+        var now = this.date;
+        var y = now.getFullYear();
+        var m = now.getMonth() + 1;
+        var d = now.getDate();
+        var mm = m < 10 ? '0' + m : m;
+        var dd = d < 10 ? '0' + d : d;
+        return '' + y + '-' + mm + '-' + dd;
+    };
+
+    this.addElement();
+    document.body.classList.remove('spinner');
+    body.append(this.container);
+}
+
+const apod = new Apod('apod');
+
+
+
+
+
+
+///function pictureOfTheDay() {
+
+///document.body.classList.add('spinner');
+
+
+///}
+
+
+
+
 
 /*document.querySelector('.container').classList.add('spinner');
 
